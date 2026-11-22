@@ -1,37 +1,47 @@
 @extends('layouts.app')
-@php($c = config('anp.contact'))
+@php $c = config('anp.contact'); @endphp
 
-@section('title', 'Best Diabetologist in Coimbatore')
 
 @section('content')
 
-{{-- ============ HERO SLIDER ============ --}}
-<section class="hero">
-    <div class="hero__bg" aria-hidden="true">
-        <span class="blob blob--1"></span><span class="blob blob--2"></span><span class="blob blob--3"></span>
+{{-- ============ HERO ============ --}}
+@php
+    $hero = [
+        'eyebrow'   => \App\Models\Setting::get('hero_eyebrow', 'Multi Speciality Hospital · Coimbatore'),
+        'title'     => \App\Models\Setting::get('hero_title', 'Trusted healthcare,'),
+        'highlight' => \App\Models\Setting::get('hero_highlight', 'close to home.'),
+        'tamil'     => \App\Models\Setting::get('hero_tamil', 'அனைவரும் நலம்பெற — நம்பிக்கையான மருத்துவம், உங்கள் அருகில்'),
+        'text'      => \App\Models\Setting::get('hero_text', 'NABH pre-accredited care on Thondamuthur Road — 24×7 emergency & ICU, experienced specialists, in-house lab and pharmacy, all under one roof for your family.'),
+        'image'     => \App\Support\Asset::url(\App\Models\Setting::get('hero_image', 'assets/img/misc/hospital-building.webp')),
+    ];
+@endphp
+<section class="lux">
+    <div class="lux__bg" aria-hidden="true">
+        <img src="{{ $hero['image'] }}" alt="" fetchpriority="high">
+        <span class="lux__shade"></span>
+        <span class="lux__beam"></span>
     </div>
 
-    <div class="container">
-        <div class="slider" id="heroSlider" aria-roledescription="carousel" aria-label="ANP Nursing Home highlights">
-            <div class="slider__track">
-                @foreach (config('anp.hero_slides') as $i => $s)
-                    <figure class="slide {{ $i === 0 ? 'is-active' : '' }}" aria-roledescription="slide" aria-label="{{ $i + 1 }} of {{ count(config('anp.hero_slides')) }}">
-                        <img src="{{ asset('assets/img/hero/' . $s['img']) }}" alt="{{ $s['alt'] }}" width="1600" height="800" @if($i > 0) loading="lazy" @else fetchpriority="high" @endif>
-                    </figure>
-                @endforeach
-            </div>
-
-            <button class="slider__arrow slider__arrow--prev" aria-label="Previous slide"><i class="bi bi-chevron-left"></i></button>
-            <button class="slider__arrow slider__arrow--next" aria-label="Next slide"><i class="bi bi-chevron-right"></i></button>
-
-            <div class="slider__dots" role="tablist">
-                @foreach (config('anp.hero_slides') as $i => $s)
-                    <button class="slider__dot {{ $i === 0 ? 'is-active' : '' }}" aria-label="Go to slide {{ $i + 1 }}"><span></span></button>
-                @endforeach
-            </div>
+    <div class="container lux__inner">
+        <span class="lux__eyebrow">{{ $hero['eyebrow'] }}</span>
+        <h1 class="lux__title">{{ $hero['title'] }} <em>{{ $hero['highlight'] }}</em></h1>
+        <p class="lux__tamil tamil">{{ $hero['tamil'] }}</p>
+        <p class="lux__text">{{ $hero['text'] }}</p>
+        <div class="lux__cta">
+            <a href="#appointment" class="lux-btn lux-btn--gold">Book an Appointment <i class="bi bi-arrow-right"></i></a>
+            <a href="tel:{{ $c['emergency_raw'] }}" class="lux-btn lux-btn--line"><i class="bi bi-telephone-fill"></i> {{ $c['emergency'] }}</a>
         </div>
+        <ul class="lux__trust">
+            <li><i class="bi bi-patch-check"></i> NABH Pre-Accredited</li>
+            <li><i class="bi bi-clock-history"></i> 24×7 Emergency &amp; ICU</li>
+            <li><i class="bi bi-shield-plus"></i> Cashless Insurance</li>
+        </ul>
+    </div>
+</section>
 
-        {{-- Quick actions overlapping the slider --}}
+{{-- ============ QUICK ACTIONS ============ --}}
+<section class="lux-quick">
+    <div class="container">
         <div class="quick">
             <a href="tel:{{ $c['emergency_raw'] }}" class="quick__item quick__item--hot">
                 <span class="quick__icon"><i class="bi bi-truck-front-fill"></i></span>
@@ -71,7 +81,7 @@
 
         <div class="about__content reveal">
             <span class="eyebrow">About ANP Nursing Home</span>
-            <h1 class="title">Multi Speciality Hospital <span class="grad">caring for Coimbatore</span></h1>
+            <h2 class="title">Multi Speciality Hospital <span class="grad">caring for Coimbatore</span></h2>
             <p class="tamil lead-tamil">{{ config('anp.tamil') }}</p>
             @foreach (config('anp.about') as $p)
                 <p>{{ $p }}</p>
@@ -118,40 +128,54 @@
     </div>
 </section>
 
+{{-- ============ DEPARTMENTS ============ --}}
+@if ($navDepartments->isNotEmpty())
+<section class="section section--tint" id="departments">
+    <div class="container">
+        <div class="section-head reveal">
+            <span class="eyebrow"><i class="bi bi-grid"></i> Our Departments</span>
+            <h2 class="title">Care that covers <span class="grad">every need</span></h2>
+            <p class="muted">Experienced doctors, modern equipment and 24×7 support across all our core departments.</p>
+        </div>
+        <div class="dept-grid">
+            @foreach ($navDepartments as $d)
+                @include('partials.dept-card', ['d' => $d, 'url' => route('departments.show', $d->slug)])
+            @endforeach
+        </div>
+    </div>
+</section>
+@endif
+
 {{-- ============ SPECIALITIES ============ --}}
-<section class="section section--tint" id="specialities">
+<section class="section" id="specialities">
     <div class="container">
         <div class="section-head section-head--split reveal">
             <div>
-                <span class="eyebrow">Departments</span>
-                <h2 class="title">Our <span class="grad">Specialities</span></h2>
+                <span class="eyebrow">Specialities</span>
+                <h2 class="title">Medical &amp; <span class="grad">Surgical Specialities</span></h2>
             </div>
             <div class="tabs" role="tablist">
-                <button class="tabs__btn is-active" data-tab="surgical" role="tab">Surgical Speciality</button>
-                <button class="tabs__btn" data-tab="medical" role="tab">Medical Speciality</button>
+                <button class="tabs__btn is-active" data-tab="medical" role="tab">Medical Speciality</button>
+                <button class="tabs__btn" data-tab="surgical" role="tab">Surgical Speciality</button>
             </div>
         </div>
 
-        @foreach (['surgical', 'medical'] as $group)
-            <div class="tab-panel {{ $group === 'surgical' ? 'is-active' : '' }}" data-panel="{{ $group }}">
+        @foreach (['medical' => $medicalList, 'surgical' => $surgicalList] as $group => $list)
+            <div class="tab-panel {{ $group === 'medical' ? 'is-active' : '' }}" data-panel="{{ $group }}">
                 <div class="carousel" data-carousel>
                     <div class="carousel__track">
-                        @foreach (config('anp.' . $group) as $d)
-                            <a href="{{ route('contact') }}?dept={{ urlencode($d['name']) }}#appointment" class="spec-card">
-                                <img src="{{ asset('assets/img/specialities/' . $d['slug'] . '.webp') }}" alt="{{ $d['name'] }}" loading="lazy" width="640" height="438">
-                                <span class="spec-card__hover"><i class="bi bi-calendar2-plus"></i> Book {{ $d['name'] }}</span>
-                            </a>
+                        @foreach ($list as $d)
+                            @include('partials.spec-card', ['d' => $d])
                         @endforeach
                     </div>
                     <button class="carousel__btn carousel__btn--prev" aria-label="Scroll left"><i class="bi bi-arrow-left"></i></button>
                     <button class="carousel__btn carousel__btn--next" aria-label="Scroll right"><i class="bi bi-arrow-right"></i></button>
                 </div>
+                <div class="center mt-3">
+                    <a href="{{ route('specialities.category', $group) }}" class="btn btn--ghost">View All {{ ucfirst($group) }} Specialities <i class="bi bi-arrow-right"></i></a>
+                </div>
             </div>
         @endforeach
-
-        <div class="center mt-3">
-            <a href="{{ route('departments') }}" class="btn btn--ghost">View All Departments <i class="bi bi-arrow-right"></i></a>
-        </div>
     </div>
 </section>
 

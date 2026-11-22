@@ -1,7 +1,6 @@
 @extends('layouts.app')
 @php($c = config('anp.contact'))
 
-@section('title', 'Contact Us')
 
 @section('content')
 @include('partials.page-hero', ['title' => 'Contact Us', 'subtitle' => 'We are here for you 24/7 — call, WhatsApp or visit us on Thondamuthur Road.'])

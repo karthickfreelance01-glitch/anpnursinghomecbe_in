@@ -39,7 +39,7 @@ return [
     'marquee' => '🚑 அவசர மருத்துவ சேவை – உடனடி உதவிக்கு தொடர்பு கொள்ளவும்: 📞 +91 88707 83938  •  24/7 Emergency & Ambulance  •  Pharmacy 5% Discount  •  Home Sample Collection for Lab Tests',
 
     'hero_slides' => [
-        ['img' => 'slide-1.webp', 'alt' => 'ANP Nursing Home – Coimbatore'],
+        ['img' => 'slide-1.webp', 'alt' => 'Happy New Year 2026 – ANP Nursing Home, Coimbatore'],
         ['img' => 'slide-2.webp', 'alt' => 'ANP Nursing Home – Your health is our priority'],
         ['img' => 'slide-3.webp', 'alt' => 'Dr. K. Arul – Diabetes, General & Critical Care Specialist'],
         ['img' => 'slide-4.webp', 'alt' => 'Dr. R. Nallichandra – Gynaecologist & Infertility Specialist'],

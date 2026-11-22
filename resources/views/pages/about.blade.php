@@ -1,6 +1,5 @@
 @extends('layouts.app')
 
-@section('title', 'About Us')
 
 @section('content')
 @include('partials.page-hero', ['title' => 'About Us', 'subtitle' => 'Over 14 years of compassionate, reliable and advanced healthcare in Coimbatore.'])

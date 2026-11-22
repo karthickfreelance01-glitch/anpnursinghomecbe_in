@@ -1,6 +1,5 @@
 @extends('layouts.app')
 
-@section('title', 'Facilities')
 
 @section('content')
 @include('partials.page-hero', ['title' => 'Facilities', 'subtitle' => '24×7 ICU, emergency, diagnostics, pharmacy and more — everything your care needs, in one place.'])

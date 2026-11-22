@@ -5,6 +5,10 @@
     <div class="container page-hero__inner">
         <nav class="crumbs" aria-label="Breadcrumb">
             <a href="{{ route('home') }}"><i class="bi bi-house"></i> Home</a>
+            @foreach ($crumbs ?? [] as $label => $link)
+                <i class="bi bi-chevron-right"></i>
+                <a href="{{ $link }}">{{ $label }}</a>
+            @endforeach
             <i class="bi bi-chevron-right"></i>
             <span>{{ $title }}</span>
         </nav>

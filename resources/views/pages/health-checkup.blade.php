@@ -1,6 +1,5 @@
 @extends('layouts.app')
 
-@section('title', 'Master Health Checkup')
 
 @section('content')
 @include('partials.page-hero', ['title' => 'Master Health Checkup', 'subtitle' => 'Detect risks early. Comprehensive screening packages with expert evaluation.'])
