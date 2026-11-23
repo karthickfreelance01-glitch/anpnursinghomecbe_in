@@ -8,7 +8,12 @@
     <div class="container">
         <div class="facilities">
             @foreach (config('anp.facilities') as $f)
-                <article @class(['facility', 'reveal', 'facility--featured' => $f['featured'] ?? false])>
+                <article @class(['facility', 'reveal', 'facility--featured' => $f['featured'] ?? false, 'facility--has-img' => !empty($f['image'])])>
+                    @if (!empty($f['image']))
+                        <div class="facility__img">
+                            <img src="{{ asset('assets/img/' . $f['image']) }}" alt="{{ $f['title'] }} at ANP Nursing Home, Coimbatore" loading="lazy">
+                        </div>
+                    @endif
                     <span class="facility__icon"><i class="bi {{ $f['icon'] }}"></i></span>
                     <h3>{{ $f['title'] }}</h3>
                     <p>{{ $f['text'] }}</p>
